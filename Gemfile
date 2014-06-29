@@ -22,6 +22,8 @@ gem 'jquery-rails'
 
 gem 'devise'
 
+gem 'rails_12factor', group: :production
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
@@ -44,3 +46,4 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+ruby "2.0.0"
