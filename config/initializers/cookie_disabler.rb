@@ -1,1 +1,0 @@
-Rails.application.config.middleware.insert_before ::ActionDispatch::Cookies, ::CookieFilter
