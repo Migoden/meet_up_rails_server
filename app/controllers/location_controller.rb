@@ -8,7 +8,7 @@ class LocationController < ApplicationController
                 :if => Proc.new { |c| c.request.format == 'application/json' }
 
  # Just skip the authentication for now
-  # before_filter :authenticate_user!
+  before_filter :authenticate_user!
 
   respond_to :json
 
