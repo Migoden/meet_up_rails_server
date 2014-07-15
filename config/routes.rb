@@ -1,13 +1,14 @@
 MeetUp20::Application.routes.draw do
   devise_for :users
 
-
   devise_scope :user do
     post 'sessions' => 'sessions#create', :as => 'login'
     delete 'sessions' => 'sessions#destroy', :as => 'logout'
     post 'registrations' => 'registrations#create', :as => 'register'
   end
-   get 'locations' => 'location#index', :as => 'locations'
+   put 'friends' => 'friends#index', :as => 'friends'
+   resources :locations
+   # resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,8 +1,6 @@
-class LocationController < ApplicationController
-  # This is our new function that comes before Devise's one
+class UsersController < ApplicationController
   before_filter :authenticate_user_from_token!
 
-  # This is Devise's authentication
   before_filter :authenticate_user!
 
   skip_before_filter :verify_authenticity_token,
@@ -11,15 +9,13 @@ class LocationController < ApplicationController
 
   respond_to :json
 
-  def index
-  
-  end
+  def index 
+  	render :status => 200,
+  		   :json => request.body
 
-  def create
-  
-  end
-
-  def show
+  	# render :status => 200,
+   #         :json => { :success => true,
+   #                    :users => { users_in_contact }
 
   end
 end
