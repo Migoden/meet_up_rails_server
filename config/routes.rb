@@ -6,8 +6,14 @@ MeetUp20::Application.routes.draw do
     delete 'sessions' => 'sessions#destroy', :as => 'logout'
     post 'registrations' => 'registrations#create', :as => 'register'
   end
-   put 'friends' => 'friends#index', :as => 'friends'
-   resources :locations
+  
+  put 'friends' => 'friends#index', :as => 'friends'
+
+  resources :friendships, only: [:create, :destroy]
+  # post 'friendships', to: :create
+  # DELETE 'friendships', to: :destroy
+
+  resources :locations
    # resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

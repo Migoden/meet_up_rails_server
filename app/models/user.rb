@@ -7,6 +7,14 @@ class User < ActiveRecord::Base
   # You likely have this before callback set up for the token.
   before_save :ensure_authentication_token
  
+  has_many :friendships
+  has_many :requested_friends, through: :friendships
+
+  # has_many :friends, class_name: 'User'
+  
+  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'requested_friend_id'
+  has_many :inverse_requested_friends, through: :inverse_friendships, source: :user
+
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token

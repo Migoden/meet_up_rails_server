@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615201134) do
+ActiveRecord::Schema.define(version: 20140719190058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "friendships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "requested_friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "friendships", ["user_id", "requested_friend_id"], name: "index_friendships_on_user_id_and_requested_friend_id", unique: true, using: :btree
 
   create_table "locations", force: true do |t|
     t.datetime "created_at"
@@ -37,10 +46,12 @@ ActiveRecord::Schema.define(version: 20140615201134) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "phone"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["phone"], name: "index_users_on_phone", using: :btree
   add_index "users", ["phone_number"], name: "index_users_on_phone_number", using: :btree
 
 end
