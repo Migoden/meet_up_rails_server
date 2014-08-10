@@ -15,7 +15,8 @@ class FriendsController < ApplicationController
     friends = []
 
     contact_numbers.each do |phone_number| 
-      found_user = User.find_by phone_number: phone_number
+
+      found_user = User.find(:all, conditions: ["phone_numbers like?", "%#{phone_number}%"]).first
       if found_user
             non_friend_users << found_user 
       end

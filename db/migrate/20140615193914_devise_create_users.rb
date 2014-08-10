@@ -20,7 +20,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string   :last_sign_in_ip
 
       t.string :name, :null => false, :default => ""
-      t.string  :phone_number, null: false
+      t.string :phone_numbers, null: false
 
       # Confirmable
       # t.string   :confirmation_token
@@ -41,7 +41,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
     add_index :users, :authentication_token, unique: true
     add_index :users, :email,                unique: true
-    add_index :users, :phone_number        , unique: false
+    add_index :users, :phone_numbers        , unique: false
     # add_index :users, :unlock_token,         unique: true
   end
 end
