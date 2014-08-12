@@ -15,25 +15,22 @@ class FriendsController < ApplicationController
     friends = []
 
     contact_numbers.each do |phone_number| 
-
       found_user = User.find(:all, conditions: ["phone_numbers like?", "%#{phone_number}%"]).first
       if found_user
             non_friend_users << found_user 
       end
     end
 
-   current_user.requested_friends.each do |requested_friend| 
-      if (current_user.inverse_requested_friends.include?(requested_friend))
-          friends << requested_friend
-          non_friend_users.delete(requested_friend)
-      end
-   end 
+   # current_user.requested_friends.each do |requested_friend| 
+   #    if (current_user.inverse_requested_friends.include?(requested_friend))
+   #        friends << requested_friend
+   #        non_friend_users.delete(requested_friend)
+   #    end
+   # end 
 
   	render :status => 200,
   		   :json => { success: true,
-          non_friends_with_app: non_friend_users.as_json(:except => [:authentication_token]),
-          friends: friends.as_json(:except => [:authentication_token])
-
+           friends: non_friend_users.as_json(:except => [:authentication_token])
         }
   end
 end
