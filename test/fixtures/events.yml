@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  start_time: 2014-08-14 21:48:07
+  latitute: 
+  longitude: 
+  address: MyString
+
+two:
+  name: MyString
+  description: MyString
+  start_time: 2014-08-14 21:48:07
+  latitute: 
+  longitude: 
+  address: MyString

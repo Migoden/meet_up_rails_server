@@ -12,7 +12,7 @@ MeetUp20::Application.routes.draw do
   resources :friendships, only: [:create, :destroy]
   # post 'friendships', to: :create
   # DELETE 'friendships', to: :destroy
-
+  resources :events
   resources :locations
    # resources :users
   # The priority is based upon order of creation: first created -> highest priority.

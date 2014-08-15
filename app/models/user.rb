@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'requested_friend_id'
   has_many :inverse_requested_friends, through: :inverse_friendships, source: :user
 
-  # serialize :phone_numbers,Array
+  has_many :event_user
+  has_many :events, :through => :event_user
 
   def ensure_authentication_token
     if authentication_token.blank?
