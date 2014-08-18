@@ -1,4 +1,4 @@
-class EventController < ApplicationController
+class EventsController < ApplicationController
   # This is our new function that comes before Devise's one
   before_filter :authenticate_user_from_token!
 
@@ -19,18 +19,32 @@ class EventController < ApplicationController
   end
 
   def create
-     event = Event.create(params)
-     if (event)
+     event = Event.create(params.permit(:name, :description, :start_time, :latitute, :longitude, :address))
+     friend_array = []
+     
+     params[:friends].each do |friend_id|
+      friend = User.find(friend_id)
+      if(friend) 
+        friend_array.push(friend)
+      else
+         render :status => 400,
+         :json => { success: false,
+           friend_id_not_found: friend_id}
+      end
+    end
+     event.users = friend_array
+
+     if (event.save)
      render :status => 200,
          :json => { success: true,
            events: event.as_json
         }
-      end
-    else
+     else
          render :status => 400,
-         :json => { success: false}
-        }
-    end
+         :json => { success: false,
+          error: event.errors}
+        
+     end
   end
 
   def show
