@@ -14,31 +14,36 @@ class EventsController < ApplicationController
   def index
       render :status => 200,
          :json => { success: true,
-           events: current_user.events.as_json(:except => [:authentication_token])
+           events: current_user.events
         }
   end
 
   def create
+     params[:start_time] = Time.at(params[:start_time]).to_datetime.strftime("%Y-%m-%d")
      event = Event.create(params.permit(:name, :description, :start_time, :latitute, :longitude, :address))
      friend_array = []
      
-     params[:friends].each do |friend_id|
-      friend = User.find(friend_id)
-      if(friend) 
-        friend_array.push(friend)
-      else
-         render :status => 400,
-         :json => { success: false,
-           friend_id_not_found: friend_id}
-      end
-    end
-     event.users = friend_array
+     params[:friend_ids].each do |friend_id|
+        friend = User.find(friend_id)
+        if(friend) 
+          friend_array.push(friend)
+        else
+           render :status => 400,
+           :json => { success: false,
+             friend_id_not_found: friend_id}
+        end
+     end
+     event.users = friend_array.push(current_user)
 
      if (event.save)
-     render :status => 200,
+       eventJSON = event.as_json;
+       userIds = event.users.map{|item| item.id};
+       eventJSON['friend_ids'] = userIds
+
+       render :status => 200,
          :json => { success: true,
-           events: event.as_json
-        }
+                     event: eventJSON}
+        
      else
          render :status => 400,
          :json => { success: false,
@@ -48,6 +53,8 @@ class EventsController < ApplicationController
   end
 
   def show
-
+       render :status => 200,
+         :json => { success: true,
+                     events: "make me yo"}
   end
 end
