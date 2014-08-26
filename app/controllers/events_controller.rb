@@ -12,9 +12,17 @@ class EventsController < ApplicationController
   respond_to :json
 
   def index
+      events = current_user.events
+      events = events.map{|event|
+        eventJSON = event.as_json
+        participants = event.users;
+        eventJSON['participants'] = participants
+        eventJSON
+      }
+
       render :status => 200,
          :json => { success: true,
-           events: current_user.events
+           events: events
         }
   end
 
@@ -23,8 +31,8 @@ class EventsController < ApplicationController
      event = Event.create(params.permit(:name, :description, :start_time, :latitute, :longitude, :address))
      friend_array = []
      
-     params[:friend_ids].each do |friend_id|
-        friend = User.find(friend_id)
+     params[:participants].each do |participant|
+        friend = User.find(participant['id'])
         if(friend) 
           friend_array.push(friend)
         else
@@ -37,8 +45,8 @@ class EventsController < ApplicationController
 
      if (event.save)
        eventJSON = event.as_json;
-       userIds = event.users.map{|item| item.id};
-       eventJSON['friend_ids'] = userIds
+       participants = event.users;
+       eventJSON['participants'] = participants
 
        render :status => 200,
          :json => { success: true,
