@@ -28,7 +28,7 @@ class EventsController < ApplicationController
 
   def create
      params[:start_time] = Time.at(params[:start_time]).to_datetime.strftime("%Y-%m-%d")
-     event = Event.create(params.permit(:name, :description, :start_time, :latitute, :longitude, :address))
+     event = Event.create(params.permit(:name, :description, :start_time, :latitude, :longitude, :address))
      friend_array = []
      
      params[:participants].each do |participant|
