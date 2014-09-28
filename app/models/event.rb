@@ -8,4 +8,8 @@ class Event < ActiveRecord::Base
     	 json['start_time'] = self.start_time.to_time.to_i
     	 json
   end
+
+  scope :with_participant, lambda { |user| 
+            includes(:producer).where('users.id LIKE ?', "%#{user.id}%") 
+  }
 end

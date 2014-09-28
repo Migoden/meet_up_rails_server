@@ -8,14 +8,24 @@ class LocationsController < ApplicationController
   skip_before_filter :verify_authenticity_token,
                 :if => Proc.new { |c| c.request.format == 'application/json' }
 
-
   respond_to :json
 
   def index
-       render :status => 200,
-         :json => { success: true,
-                     locations: Location.all.as_json}
-  
+    if(params[:event_id]) 
+        event = Event.find(params[:event_id])
+        users = event.users
+        locations = []
+        users.each do |user|
+          locations << user.locations
+        end 
+        render :status => 200,
+           :json => { success: true,
+                       locations: locations.as_json}
+    else
+        render :status => 400,
+           :json => { success: false,
+                       error: 'missing event_id'}
+    end
   end
 
   def create
@@ -23,7 +33,7 @@ class LocationsController < ApplicationController
      params[:locations].each do |locationJSON|
        locationJSON[:recorded_at] = Time.at(locationJSON[:recorded_at]).to_datetime.strftime("%Y-%m-%d")
        location = Location.create(locationJSON.permit(:recorded_at, :latitude, :longitude))
-       location.user = User.find(locationJSON[:user_id])
+       location.user = current_user
        
        if (location.save)
            locations.push location
@@ -37,9 +47,11 @@ class LocationsController < ApplicationController
 
      end
 
+     removeOldLocations(current_user)
          render :status => 200,
            :json => { success: true,
                        locations: locations.as_json}
+  end
 
 
   end

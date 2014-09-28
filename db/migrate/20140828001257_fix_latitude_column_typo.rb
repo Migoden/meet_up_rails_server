@@ -3,3 +3,5 @@ class FixLatitudeColumnTypo < ActiveRecord::Migration
   	rename_column :events, :latitute, :latitude
   end
 end
+
+

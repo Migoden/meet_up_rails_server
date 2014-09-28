@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   has_many :event_user
   has_many :events, :through => :event_user
+  
+  has_many :locations
 
   def ensure_authentication_token
     if authentication_token.blank?
