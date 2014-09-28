@@ -53,7 +53,10 @@ class LocationsController < ApplicationController
                        locations: locations.as_json}
   end
 
-
+  def removeOldLocations (user)   
+    if(user.locations.last.recorded_at < 1.week.ago)
+      user.locations.where(:recorded_at < 1.week.ago).destroy_all
+    end
   end
 
   def show
