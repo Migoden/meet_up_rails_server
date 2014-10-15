@@ -9,7 +9,7 @@ gem 'capistrano', '3.2.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
-gem 'net-ssh', '2.8.1'
+gem 'net-ssh', '2.9.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
