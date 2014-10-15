@@ -47,10 +47,10 @@ class LocationsController < ApplicationController
 
      end
 
-     removeOldLocations(current_user)
-         render :status => 200,
-           :json => { success: true,
-                       locations: locations.as_json}
+     # removeOldLocations(current_user)
+     render :status => 200,
+       :json => { success: true,
+                   locations: locations.as_json}
   end
 
   def removeOldLocations (user)   

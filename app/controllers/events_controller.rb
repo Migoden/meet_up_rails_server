@@ -66,3 +66,8 @@ class EventsController < ApplicationController
                      events: "make me yo"}
   end
 end
+
+
+# Value {"id":74,"friend_ids":[1],"updated_at":"2014-08-25T20:13:32.320Z","address":"Mavis Rd Mavis Rd, Mississauga","description":"icky","name":"HSBC","created_at":"2014-08-25T20:13:32.320Z","start_time":"2014-08-25T00:00:00.000Z","longitude":"43.62978990017129","latitute":null} at events of type org.json.JSONObject cannot be converted to JSONArray
+
+
